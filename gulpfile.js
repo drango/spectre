@@ -4,6 +4,8 @@ var cleancss = require('gulp-clean-css');
 var csscomb = require('gulp-csscomb');
 var rename = require('gulp-rename');
 var LessPluginAutoPrefix = require('less-plugin-autoprefix');
+var classPrefix = require('gulp-class-prefix');
+var cssSandbox = require("gulp-css-sandbox");
 
 var autoprefix= new LessPluginAutoPrefix({ browsers: ["last 4 versions"] });
 
@@ -13,11 +15,13 @@ gulp.task('watch', function() {
 });
 
 gulp.task('build', function() {
-    gulp.src('./*.less')
+    gulp.src(['./*.less', '!./base.less'])
         .pipe(less({
             plugins: [autoprefix]
         }))
         .pipe(csscomb())
+		.pipe(classPrefix('spec-'))
+		.pipe(cssSandbox('.spectre'))
         .pipe(gulp.dest('./dist'))
         .pipe(cleancss())
         .pipe(rename({
