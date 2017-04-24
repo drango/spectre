@@ -15,7 +15,7 @@ gulp.task('watch', function() {
 });
 
 gulp.task('build', function() {
-    gulp.src(['./*.less', '!./base.less'])
+    gulp.src(['./*.less'])
         .pipe(less({
             plugins: [autoprefix]
         }))
